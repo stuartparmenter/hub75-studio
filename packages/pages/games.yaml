@@ -18,12 +18,12 @@ lvgl_page_manager:
 substitutions:
   GAMES_FPS: "30"                      # Target frame rate (1-240)
 
-# External component from games-esphome repository
-external_components:
-  - source: https://github.com/stuartparmenter/games-esphome@main
-
 esp32_ble:
   id: ble
+  
+# External component from games-esphome repository
+external_components:
+  - source: github://stuartparmenter/games-esphome@main
 
 ble_gamepad:
   id: gamepad
