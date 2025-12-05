@@ -22,9 +22,6 @@ psram:
   mode: quad
   speed: 80MHz
 
-external_components:
-  - source: github://stuartparmenter/hub75-esphome@main
-
 display:
   - platform: hub75
     id: matrix

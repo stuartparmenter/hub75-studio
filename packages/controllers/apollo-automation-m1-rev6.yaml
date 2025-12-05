@@ -48,9 +48,6 @@ microphone:
     i2s_mode: primary
     i2s_audio_id: i2s_mic_bus
 
-external_components:
-  - source: github://stuartparmenter/hub75-esphome@main
-
 display:
   - platform: hub75
     id: matrix

@@ -17,9 +17,6 @@ esp32:
     sdkconfig_options:
       CONFIG_ESP32S3_DATA_CACHE_LINE_64B: y
 
-external_components:
-  - source: github://stuartparmenter/hub75-esphome@main
-
 display:
   - platform: hub75
     id: matrix
