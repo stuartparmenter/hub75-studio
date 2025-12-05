@@ -1,0 +1,40 @@
+# © Copyright 2025 Stuart Parmenter
+# SPDX-License-Identifier: MIT
+
+esp32:
+  board: esp32dev
+  flash_size: 4MB
+  cpu_frequency: 240MHz
+  framework:
+    type: esp-idf
+    advanced:
+      compiler_optimization: PERF
+      enable_idf_experimental_features: true
+
+display:
+  - platform: hub75
+    id: matrix
+    board: esp32-trinity
+
+    panel_width: ${panel_width}
+    panel_height: ${panel_height}
+    layout: ${layout}
+    layout_rows: ${layout_rows}
+    layout_cols: ${layout_cols}
+    scan_wiring: ${scan_wiring}
+
+    clock_phase: false
+    latch_blanking: 1
+    clock_speed: 20MHz
+
+    bit_depth: 8
+
+    # for LVGL
+    double_buffer: false
+    auto_clear_enabled: false
+    update_interval: never
+
+lvgl:
+  buffer_size: 100%
+  displays:
+    - matrix
