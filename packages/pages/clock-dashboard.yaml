@@ -8,13 +8,13 @@
 # Required vars:
 #   page_friendly_name: Name of the page (e.g., Clock Dashboard)
 #   weather_entity: Weather entity (e.g., weather.home)
-#   high_entity: High temperature sensor (e.g., sensor.weather_today_high)
-#   low_entity: Low temperature sensor (e.g., sensor.weather_today_low)
 #   alarm_entity: Alarm control panel (e.g., alarm_control_panel.example_alarm)
 #   person_a: Person A entity (e.g., person.person_a)
 #   person_b: Person B entity (e.g., person.person_b)
 #   person_a_icon: Icon for Person A (e.g., "\U000F040A")
 #   person_b_icon: Icon for Person B (e.g., "\U000F0B8F")
+#
+# Note: High/low temperatures are fetched automatically from weather.get_forecasts (ESPHome 2025.12+)
 
 lvgl_page_manager:
   pages:
@@ -23,6 +23,25 @@ lvgl_page_manager:
 
 substitutions:
   UNITS: "°"
+
+globals:
+  - id: forecast_high
+    type: float
+    restore_value: no
+    initial_value: 'NAN'
+  - id: forecast_low
+    type: float
+    restore_value: no
+    initial_value: 'NAN'
+
+# --- Deprecation warnings for removed vars ---
+esphome:
+  on_boot:
+    priority: 100
+    then:
+      - lambda: |-
+          ${ '#warning "high_entity is deprecated in clock-dashboard (received ' + (high_entity | string) + ')"' if high_entity is defined else '' }
+          ${ '#warning "low_entity is deprecated in clock-dashboard (received ' + (low_entity | string) + ')"' if low_entity is defined else '' }
 
 # --- Weather icon fonts (icons only; all text uses Spleen from styles.yaml) ---
 font:
@@ -189,6 +208,32 @@ script:
             snprintf(buf, sizeof(buf), "%s %d:%02d", day, hour12, t.minute);
             return buf;
 
+  - id: fetch_weather_forecast
+    then:
+      - homeassistant.action:
+          action: weather.get_forecasts
+          data:
+            entity_id: ${weather_entity}
+            type: daily
+          capture_response: true
+          on_success:
+            - lambda: |-
+                JsonArrayConst forecast = response["response"]["${weather_entity}"]["forecast"];
+                if (forecast.size() > 0) {
+                  JsonObjectConst today = forecast[0];
+                  id(forecast_high) = today["temperature"].as<float>();
+                  id(forecast_low) = today["templow"].as<float>();
+                }
+            - lvgl.label.update:
+                id: wx_hilo
+                text: !lambda |-
+                  if (isnan(id(forecast_high)) || isnan(id(forecast_low))) return "";
+                  static char buf[10];
+                  snprintf(buf, sizeof(buf), "%d-%d",
+                           (int) id(forecast_low),
+                           (int) id(forecast_high));
+                  return buf;
+
 # -------- Time (updates every minute) --------
 time:
   - id: !extend ha_time
@@ -203,6 +248,17 @@ time:
         minutes: /1
         then:
           - script.execute: update_datetime_label
+
+# -------- Forecast fetch (every 30 minutes) --------
+interval:
+  - interval: 30min
+    then:
+      - script.execute: fetch_weather_forecast
+
+api:
+  on_client_connected:
+    then:
+      - script.execute: fetch_weather_forecast
 
 # -------- Sensors --------
 sensor:
@@ -219,38 +275,6 @@ sensor:
             if (isnan(id(wx_temp_now).state)) return "";
             static char buf[12];
             snprintf(buf, sizeof(buf), "%d%s", (int) id(wx_temp_now).state, "${UNITS}");
-            return buf;
-
-  # Today's High
-  - platform: homeassistant
-    id: wx_today_high
-    entity_id: ${high_entity}
-    accuracy_decimals: 0
-    on_value:
-      - lvgl.label.update:
-          id: wx_hilo
-          text: !lambda |-
-            if (isnan(id(wx_today_high).state) || isnan(id(wx_today_low).state)) return "";
-            static char buf[10];
-            snprintf(buf, sizeof(buf), "%d-%d",
-                     (int) id(wx_today_low).state,
-                     (int) id(wx_today_high).state);
-            return buf;
-
-  # Today's Low
-  - platform: homeassistant
-    id: wx_today_low
-    entity_id: ${low_entity}
-    accuracy_decimals: 0
-    on_value:
-      - lvgl.label.update:
-          id: wx_hilo
-          text: !lambda |-
-            if (isnan(id(wx_today_high).state) || isnan(id(wx_today_low).state)) return "";
-            static char buf[10];
-            snprintf(buf, sizeof(buf), "%d-%d",
-                     (int) id(wx_today_low).state,
-                     (int) id(wx_today_high).state);
             return buf;
 
 # -------- Condition (icon + color) --------

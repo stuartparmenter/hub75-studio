@@ -91,8 +91,6 @@ packages:
       vars:
         page_friendly_name: "Clock Dashboard"
         weather_entity: "weather.home"
-        high_entity: "sensor.weather_today_high"
-        low_entity:  "sensor.weather_today_low"
         alarm_entity: "alarm_control_panel.example_alarm"
         person_a: "person.person_a"
         person_b: "person.person_b"
