@@ -34,6 +34,15 @@ globals:
     restore_value: no
     initial_value: 'NAN'
 
+# --- Deprecation warnings for removed vars ---
+esphome:
+  on_boot:
+    priority: 100
+    then:
+      - lambda: |-
+          ${ '#warning "high_entity is deprecated in clock-dashboard (received ' + (high_entity | string) + ')"' if high_entity is defined else '' }
+          ${ '#warning "low_entity is deprecated in clock-dashboard (received ' + (low_entity | string) + ')"' if low_entity is defined else '' }
+
 # --- Weather icon fonts (icons only; all text uses Spleen from styles.yaml) ---
 font:
   - file: "https://github.com/stuartparmenter/hub75-studio/raw/refs/heads/main/fonts/materialdesignicons-webfont.ttf"
