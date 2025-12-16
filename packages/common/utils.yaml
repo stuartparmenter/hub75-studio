@@ -38,11 +38,13 @@ switch:
     restore_mode: RESTORE_DEFAULT_ON
     optimistic: true
     turn_on_action:
-      - lambda: |-
-          id(matrix).set_brightness((uint8_t)id(brightness).state);
+      - hub75.set_brightness:
+          id: matrix
+          brightness: !lambda return id(brightness).state;
     turn_off_action:
-      - lambda: |-
-          id(matrix).set_brightness(0);
+      - hub75.set_brightness:
+          id: matrix
+          brightness: 0
 
 number:
   - platform: template
@@ -57,10 +59,13 @@ number:
     initial_value: 128
     on_value:
       then:
-        - lambda: |-
-            if (id(power).state) {
-              id(matrix).set_brightness((uint8_t)x);
-            }
+        - if:
+            condition:
+              switch.is_on: power
+            then:
+              - hub75.set_brightness:
+                  id: matrix
+                  brightness: !lambda return x;
 
 # Memory reporting sensor
 sensor:
