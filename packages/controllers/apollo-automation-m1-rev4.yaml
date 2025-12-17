@@ -1,10 +1,6 @@
 # © Copyright 2025 Stuart Parmenter
 # SPDX-License-Identifier: MIT
 
-substitutions:
-  PANEL_W: "64"
-  PANEL_H: "64"
-
 esp32:
   board: esp32-s3-devkitc-1
   flash_size: 16MB
