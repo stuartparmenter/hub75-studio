@@ -1,7 +1,7 @@
 # HUB75 Studio
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![ESPHome](https://img.shields.io/badge/ESPHome-2025.10-blue)](https://esphome.io/)
+[![ESPHome](https://img.shields.io/badge/ESPHome-2025.12-blue)](https://esphome.io/)
 [![Python](https://img.shields.io/badge/Python-3.11+-blue)](https://www.python.org/)
 
 **Transform your HUB75 LED matrix into a smart display for Home Assistant.**
@@ -39,7 +39,7 @@ Built on **ESPHome** with **LVGL** for smooth graphics, everything integrates se
 
 **For Building from Source (Optional):**
 - **Python 3.11+** required for ESPHome toolchain
-- **ESPHome 2025.10.x** with ESP‑IDF framework (Arduino not supported)
+- **ESPHome 2025.12.x** with ESP‑IDF framework (Arduino not supported)
 - **Home Assistant** for full integration features
 
 **For Using Prebuilt Firmware:**
@@ -132,7 +132,6 @@ docker run --rm -it -v "$PWD":/config esphome/esphome run apollo-automation-m1-r
 ---
 
 ## External Components
-- **HUB75 Display Driver**: [`stuartparmenter/ESPHome-HUB75-MatrixDisplayWrapper`](https://github.com/stuartparmenter/ESPHome-HUB75-MatrixDisplayWrapper)
 - **DDP Stream + WebSocket Control**: [`stuartparmenter/lvgl-ddp-stream`](https://github.com/stuartparmenter/lvgl-ddp-stream)
 - **LVGL Canvas Effects**: [`stuartparmenter/lvgl-canvas-fx`](https://github.com/stuartparmenter/lvgl-canvas-fx)
 - **Page Manager**: [`stuartparmenter/lvgl-page-manager`](https://github.com/stuartparmenter/lvgl-page-manager)
