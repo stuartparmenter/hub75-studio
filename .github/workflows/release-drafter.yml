@@ -1,0 +1,38 @@
+name: Release Drafter
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-drafter:
+    name: Release Drafter
+    environment: release-drafter
+    runs-on: ubuntu-latest
+    steps:
+      - uses: release-drafter/release-drafter@v6
+        id: drafter
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.RELEASE_TOKEN }}
+
+      - name: Update version files
+        run: |
+          sed -i 's/^version = .*/version = "${{ steps.drafter.outputs.resolved_version }}"/g' pyproject.toml
+
+      - name: Commit changes
+        run: |
+          if ! git diff --quiet; then
+            git config --global user.name "github-actions[bot]"
+            git config --global user.email "github-actions[bot]@users.noreply.github.com"
+            git commit -am "Bump version to ${{ steps.drafter.outputs.resolved_version }}"
+            git push
+          fi
