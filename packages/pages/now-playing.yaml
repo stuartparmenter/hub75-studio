@@ -430,7 +430,7 @@ lvgl:
         # On 64x64, this is full screen.  On wider displays it is put as the right panel
         - canvas:
             id: art_canvas_${uid}
-            x: ${DISPLAY_W == '64' and '0' or '64'}
+            x: ${DISPLAY_W == 64 and '0' or '64'}
             y: 0
             width: 64
             height: 64
@@ -442,7 +442,7 @@ lvgl:
             y: 0
             width: 64
             height: 64
-            hidden: ${DISPLAY_W == '64'}
+            hidden: ${DISPLAY_W == 64}
             layout:
               type: flex
               flex_flow: COLUMN
