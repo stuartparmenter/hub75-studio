@@ -28,11 +28,17 @@ jobs:
         run: |
           sed -i 's/^version = .*/version = "${{ steps.drafter.outputs.resolved_version }}"/g' pyproject.toml
 
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+
+      - name: Regenerate lockfile
+        run: uv lock
+
       - name: Commit changes
         run: |
           if ! git diff --quiet; then
             git config --global user.name "github-actions[bot]"
             git config --global user.email "github-actions[bot]@users.noreply.github.com"
-            git commit -am "Bump version to ${{ steps.drafter.outputs.resolved_version }}"
+            git commit -am "Bump version to ${{ steps.drafter.outputs.resolved_version }} [skip ci]"
             git push
           fi
