@@ -36,6 +36,24 @@ display:
     auto_clear_enabled: false
     update_interval: never
 
+# Boot button (GPIO0) as power toggle
+binary_sensor:
+  - platform: gpio
+    id: power_button
+    internal: true
+    pin:
+      number: GPIO0
+      mode:
+        input: true
+        pullup: true
+      inverted: true
+    filters:
+      - delayed_on: 10ms
+      - delayed_off: 10ms
+    on_click:
+      then:
+        - switch.toggle: power
+
 lvgl:
   buffer_size: 100%
   displays:
