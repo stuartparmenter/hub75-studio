@@ -3,4 +3,4 @@
 
 # Enforce minimum ESPHome version
 esphome:
-  min_version: 2025.12.3
+  min_version: 2026.1.0
