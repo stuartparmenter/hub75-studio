@@ -149,7 +149,7 @@ espnow:
 
           bool discovery_mode = id(wizmote_discovery_mode).state;
 
-          ESP_LOGD("wizmote", "UNKNOWN PEER: Received ESP-NOW data from %s, length: %d",
+          ESP_LOGV("wizmote", "UNKNOWN PEER: Received ESP-NOW data from %s, length: %d",
                    sender_mac.c_str(), size);
 
           // WizMote protocol: expect 13 bytes
@@ -238,11 +238,11 @@ espnow:
 
               id(process_wizmote_button).execute(button);
             } else {
-              ESP_LOGD("wizmote", "WizMote broadcast from non-paired device: %s (configured: %s)",
+              ESP_LOGV("wizmote", "WizMote broadcast from non-paired device: %s (configured: %s)",
                        sender_mac.c_str(), configured_mac.c_str());
             }
           } else {
-            ESP_LOGD("wizmote", "ESP-NOW broadcast (non-WizMote, length: %d)", size);
+            ESP_LOGV("wizmote", "ESP-NOW broadcast (non-WizMote, length: %d)", size);
           }
 
 
