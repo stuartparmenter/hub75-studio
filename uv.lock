@@ -609,7 +609,7 @@ wheels = [
 
 [[package]]
 name = "hub75-studio"
-version = "0.6.3"
+version = "0.6.4"
 source = { virtual = "." }
 dependencies = [
     { name = "esphome" },
