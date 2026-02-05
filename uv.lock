@@ -514,7 +514,7 @@ wheels = [
 
 [[package]]
 name = "esphome"
-version = "2026.1.2"
+version = "2026.1.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aioesphomeapi" },
@@ -545,9 +545,9 @@ dependencies = [
     { name = "voluptuous" },
     { name = "zeroconf" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/0b/18/843629378fb54a7e8e27bf1ee3ec330ba236521b0e9660037c9178e9fca3/esphome-2026.1.2.tar.gz", hash = "sha256:bd6a5162a2cb996c3bd9ce620003125961a9ba33b89049e5ee0654b4e81aa5f1", size = 3822361, upload-time = "2026-01-25T18:22:07.83Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/42/9d/caed1242bc6e0eebbf37fd070263d488ded453de3488d9d8ef17ce59e1ca/esphome-2026.1.4.tar.gz", hash = "sha256:a3a307d7d663ea733c65f2b2e79be9b7ef69a77344574ebe70852d108e66275d", size = 3830831, upload-time = "2026-02-04T11:02:16.059Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/42/c5/9a27d1247aa78ef56e7132527bf159850969fcc156d24609dce518026510/esphome-2026.1.2-py3-none-any.whl", hash = "sha256:9319b8eaba6f61def9c07fe5d6175bbd1c8aa1b65851729a9694fddee786d821", size = 5468183, upload-time = "2026-01-25T18:22:05.741Z" },
+    { url = "https://files.pythonhosted.org/packages/d2/bb/dd5b68b3c2a32364567a8b48c0d4a7ad69d1e9be795f89d74a2fef772b7a/esphome-2026.1.4-py3-none-any.whl", hash = "sha256:9bee0cc5a45a4a23c31f81fa5f58cc0724c3a348cb6c479fe0fc2a44eafec4e5", size = 5476627, upload-time = "2026-02-04T11:02:13.694Z" },
 ]
 
 [[package]]
@@ -893,11 +893,11 @@ wheels = [
 
 [[package]]
 name = "pip"
-version = "26.0"
+version = "26.0.1"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/44/c2/65686a7783a7c27a329706207147e82f23c41221ee9ae33128fc331670a0/pip-26.0.tar.gz", hash = "sha256:3ce220a0a17915972fbf1ab451baae1521c4539e778b28127efa79b974aff0fa", size = 1812654, upload-time = "2026-01-31T01:40:54.361Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/48/83/0d7d4e9efe3344b8e2fe25d93be44f64b65364d3c8d7bc6dc90198d5422e/pip-26.0.1.tar.gz", hash = "sha256:c4037d8a277c89b320abe636d59f91e6d0922d08a05b60e85e53b296613346d8", size = 1812747, upload-time = "2026-02-05T02:20:18.702Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/69/00/5ac7aa77688ec4d34148b423d34dc0c9bc4febe0d872a9a1ad9860b2f6f1/pip-26.0-py3-none-any.whl", hash = "sha256:98436feffb9e31bc9339cf369fd55d3331b1580b6a6f1173bacacddcf9c34754", size = 1787564, upload-time = "2026-01-31T01:40:52.252Z" },
+    { url = "https://files.pythonhosted.org/packages/de/f0/c81e05b613866b76d2d1066490adf1a3dbc4ee9d9c839961c3fc8a6997af/pip-26.0.1-py3-none-any.whl", hash = "sha256:bdb1b08f4274833d62c1aa29e20907365a2ceb950410df15fc9521bad440122b", size = 1787723, upload-time = "2026-02-05T02:20:16.416Z" },
 ]
 
 [[package]]
