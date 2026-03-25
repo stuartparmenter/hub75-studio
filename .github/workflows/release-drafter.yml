@@ -15,12 +15,12 @@ jobs:
     environment: release-drafter
     runs-on: ubuntu-latest
     steps:
-      - uses: release-drafter/release-drafter@v6
+      - uses: release-drafter/release-drafter@6a93d829887aa2e0748befe2e808c66c0ec6e4c7 # v6
         id: drafter
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           token: ${{ secrets.RELEASE_TOKEN }}
 
@@ -29,7 +29,7 @@ jobs:
           sed -i 's/^version = .*/version = "${{ steps.drafter.outputs.resolved_version }}"/g' pyproject.toml
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v7
+        uses: astral-sh/setup-uv@37802adc94f370d6bfd71619e3f0bf239e1f3b78 # v7
 
       - name: Regenerate lockfile
         run: uv lock
