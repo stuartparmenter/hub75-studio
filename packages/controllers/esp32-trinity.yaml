@@ -35,6 +35,7 @@ display:
     update_interval: never
 
 lvgl:
+  byte_order: little_endian
   buffer_size: 100%
   displays:
     - matrix

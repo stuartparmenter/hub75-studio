@@ -280,6 +280,7 @@ light:
     id: status_led
 
 lvgl:
+  byte_order: little_endian
   buffer_size: 100%
   displays:
     - matrix
