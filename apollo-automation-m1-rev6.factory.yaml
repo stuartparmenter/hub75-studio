@@ -89,7 +89,7 @@ packages:
   theme: !include packages/common/theme.yaml
 
   # Shared DDP and DDP websocket control config
-  # Note: This is required by "Now Playing" and the "DDP Stream" pages
+  # Note: This is required by "Now Playing", "Sendspin", and the "DDP Stream" pages
   ddp: !include
     file: packages/common/ddp.yaml
     vars:
@@ -106,6 +106,12 @@ packages:
     file: packages/pages/clock.yaml
     vars:
       page_friendly_name: "Clock"
+
+  # Sendspin music player page (album art + track info + progress)
+  sendspin: !include
+    file: packages/pages/sendspin.yaml
+    vars:
+      page_friendly_name: "Sendspin"
 
   # Page that uses lvgl-canvas-fx to render various effects (and change which in HA)
   fx: !include
