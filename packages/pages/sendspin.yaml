@@ -1,0 +1,189 @@
+# © Copyright 2026 Stuart Parmenter
+# SPDX-License-Identifier: MIT
+
+# SendSpin Music Player Page
+# Displays album art, scrolling track info, and a progress bar for music
+# streamed to the device via the SendSpin ESPHome media_player component.
+# Designed for a single 64x64 panel.
+#
+# Required vars:
+#   page_friendly_name: Name of the page (e.g., SendSpin)
+
+lvgl_page_manager:
+  pages:
+    - page: page_sendspin
+      friendly_name: "${page_friendly_name}"
+
+external_components:
+  - source: github://kahrendt/esphome@sendspin-dev-snapshot2
+    components: [const, generic_image, sendspin]
+    refresh: 0s
+
+sendspin:
+  id: sendspin_hub
+
+generic_image:
+  - platform: sendspin
+    id: sendspin_cover_art
+    format: jpg
+    type: rgb565
+    resize: 64x64
+    image_source: ALBUM
+    on_image_decoded:
+      - lambda: |-
+          lv_obj_t* img = id(sendspin_album_art);
+          lv_img_set_src(img, id(sendspin_cover_art));
+          lv_img_set_zoom(img, LV_ZOOM_NONE);
+          static lv_anim_t fade_in;
+          lv_anim_init(&fade_in);
+          lv_anim_set_var(&fade_in, img);
+          lv_anim_set_values(&fade_in, 0, 255);
+          lv_anim_set_time(&fade_in, 300);
+          lv_anim_set_exec_cb(&fade_in, [](void* obj, int32_t v) {
+              lv_obj_set_style_img_opa((lv_obj_t*)obj, v, 0);
+          });
+          lv_anim_start(&fade_in);
+    on_image_error:
+      - logger.log: "Failed to decode SendSpin cover art"
+
+media_player:
+  - platform: sendspin
+    id: sendspin_media_player
+    name: "SendSpin Player"
+
+text_sensor:
+  - platform: sendspin
+    id: sendspin_track_title
+    type: title
+    on_value:
+      - component.update: sendspin_now_playing_text
+
+  - platform: sendspin
+    id: sendspin_track_artist
+    type: artist
+    on_value:
+      - component.update: sendspin_now_playing_text
+
+  - platform: sendspin
+    id: sendspin_album_title
+    type: album
+
+  - platform: template
+    id: sendspin_now_playing_text
+    lambda: |-
+      std::string text = id(sendspin_track_title).get_state();
+      if (!id(sendspin_track_artist).get_state().empty()) {
+        if (!text.empty()) {
+          text += " - ";
+        }
+        text += id(sendspin_track_artist).get_state();
+      }
+      return text;
+    on_value:
+      - script.execute:
+          id: normalize_media_text
+          widget: !lambda 'return id(sendspin_now_playing_label);'
+          text: !lambda 'return x.c_str();'
+    update_interval: never
+
+sensor:
+  - platform: sendspin
+    type: track_duration
+    id: sendspin_track_duration
+
+number:
+  - platform: template
+    name: "SendSpin Scroll Speed"
+    id: sendspin_scroll_speed
+    icon: "mdi:speedometer"
+    entity_category: config
+    min_value: 1
+    max_value: 10
+    step: 1
+    initial_value: 5
+    optimistic: true
+    restore_value: true
+    on_value:
+      - lambda: |-
+          uint32_t anim_ms = (uint32_t)(11000 - x * 1000);
+          lv_obj_set_style_anim_time(id(sendspin_now_playing_label), anim_ms, LV_PART_MAIN);
+          // Force the running scroll animation to restart with the new speed
+          lv_label_set_long_mode(id(sendspin_now_playing_label), LV_LABEL_LONG_CLIP);
+          lv_label_set_long_mode(id(sendspin_now_playing_label), LV_LABEL_LONG_SCROLL_CIRCULAR);
+
+# Poll track progress while playing and drive the progress bar.
+# Runs regardless of which page is active so the bar is ready on page switch.
+interval:
+  - interval: 0.25s
+    then:
+      - if:
+          condition:
+            - media_player.is_playing: sendspin_media_player
+          then:
+            - sendspin.get_track_progress:
+                then:
+                  - lambda: |-
+                      float duration = id(sendspin_track_duration).state;
+                      if (duration > 0) {
+                        int pct = (int)((x * 100.0f) / duration);
+                        pct = std::max(0, std::min(100, pct));
+                        lv_bar_set_value(id(sendspin_progress_bar), pct, LV_ANIM_OFF);
+                      }
+
+lvgl:
+  pages:
+    - id: page_sendspin
+      bg_color: 0x000000
+      scrollbar_mode: "OFF"
+      widgets:
+        - image:
+            id: sendspin_album_art
+            x: 0
+            y: 0
+            src: sendspin_cover_art
+            width: 64
+            height: 64
+
+        - obj:
+            x: 0
+            y: 52
+            width: 64
+            height: 10
+            bg_color: 0x000000
+            bg_opa: 60%
+            border_width: 0
+            radius: 0
+            scrollbar_mode: "OFF"
+            scrollable: false
+            widgets:
+              - label:
+                  id: sendspin_now_playing_label
+                  x: 0
+                  y: 1
+                  width: 64
+                  height: 8
+                  text: ""
+                  text_color: 0xFFFFFF
+                  text_font: spleen_8
+                  long_mode: SCROLL_CIRCULAR
+
+        - bar:
+            id: sendspin_progress_bar
+            x: 0
+            y: 62
+            width: 64
+            height: 2
+            value: 0
+            min_value: 0
+            max_value: 100
+            bg_color: 0x333333
+            bg_opa: COVER
+            indicator:
+              bg_color: 0xFFFFFF
+              bg_opa: COVER
+
+      on_load:
+        then:
+          - lambda: |-
+              uint32_t anim_ms = (uint32_t)(11000 - id(sendspin_scroll_speed).state * 1000);
+              lv_obj_set_style_anim_time(id(sendspin_now_playing_label), anim_ms, LV_PART_MAIN);

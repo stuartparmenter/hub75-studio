@@ -105,6 +105,11 @@ packages:
     #     ha_base_url: "http://homeassistant.local:8123"  # Used to get preview images
     #     media_player_entity: "media_player.your_media_player"
 
+    # SendSpin music player page (album art + track info + progress)
+    # - path: packages/pages/sendspin.yaml
+    #   vars:
+    #     page_friendly_name: "SendSpin"
+
     # Page that uses lvgl-canvas-fx to render various effects (and change which in HA)
     - path: packages/pages/fx.yaml
       vars:
