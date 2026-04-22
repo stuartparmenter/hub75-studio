@@ -38,7 +38,7 @@ web_server:
 
 packages:
   remote_package_files:
-    url: https://github.com/stuartparmenter/hub75-studio
+    url: https://github.com/pavlov-net/hub75-studio
     ref: main
     refresh: 0s
     files:

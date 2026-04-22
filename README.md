@@ -1,7 +1,7 @@
 # HUB75 Studio
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![ESPHome](https://img.shields.io/badge/ESPHome-2025.12-blue)](https://esphome.io/)
+[![ESPHome](https://img.shields.io/badge/ESPHome-2026.4-blue)](https://esphome.io/)
 [![Python](https://img.shields.io/badge/Python-3.11+-blue)](https://www.python.org/)
 
 **Transform your HUB75 LED matrix into a smart display for Home Assistant.**
@@ -39,7 +39,7 @@ Built on **ESPHome** with **LVGL** for smooth graphics, everything integrates se
 
 **For Building from Source (Optional):**
 - **Python 3.11+** required for ESPHome toolchain
-- **ESPHome 2025.12.x** with ESP‑IDF framework (Arduino not supported)
+- **ESPHome 2026.4.x** with ESP‑IDF framework (Arduino not supported)
 - **Home Assistant** for full integration features
 
 **For Using Prebuilt Firmware:**
@@ -77,20 +77,20 @@ Built on **ESPHome** with **LVGL** for smooth graphics, everything integrates se
 - Built on ESP‑IDF with LVGL for smooth graphics
 - Reproducible builds with lockfiles
 
-📖 **[See all 15+ pages with detailed configurations →](https://github.com/stuartparmenter/hub75-studio/wiki/Pages-and-Applications)**
+📖 **[See all 15+ pages with detailed configurations →](https://github.com/pavlov-net/hub75-studio/wiki/Pages-and-Applications)**
 
 ---
 
 ## Getting Started
 
 **Quick Installation (Web Flasher)**
-1. Visit **[HUB75 Studio Web Installer](https://stuartparmenter.github.io/hub75-studio/)**
+1. Visit **[HUB75 Studio Web Installer](https://pavlov-net.github.io/hub75-studio/)**
 2. Connect your device via USB and flash firmware
 3. Configure Wi‑Fi and adopt in Home Assistant
 
-📖 **[View detailed installation guide →](https://github.com/stuartparmenter/hub75-studio/wiki/Installation)**
+📖 **[View detailed installation guide →](https://github.com/pavlov-net/hub75-studio/wiki/Installation)**
 
-> **Alternative**: Download prebuilt firmware from [Releases](https://github.com/stuartparmenter/hub75-studio/releases) and flash via [web.esphome.io](https://web.esphome.io/)
+> **Alternative**: Download prebuilt firmware from [Releases](https://github.com/pavlov-net/hub75-studio/releases) and flash via [web.esphome.io](https://web.esphome.io/)
 
 ---
 
@@ -104,7 +104,7 @@ Customize your device by editing its YAML configuration in ESPHome. Common custo
 - Device‑specific toggles for pages/effects
 - WizMote remote control setup
 
-📖 **[View detailed customization guide (including WizMote setup) →](https://github.com/stuartparmenter/hub75-studio/wiki/Customization)**
+📖 **[View detailed customization guide (including WizMote setup) →](https://github.com/pavlov-net/hub75-studio/wiki/Customization)**
 
 > Keep personal entity IDs and secrets in your local device config inside ESPHome; they're **not** tracked in this repo.
 
@@ -132,9 +132,9 @@ docker run --rm -it -v "$PWD":/config esphome/esphome run apollo-automation-m1-r
 ---
 
 ## External Components
-- **DDP Stream + WebSocket Control**: [`stuartparmenter/lvgl-ddp-stream`](https://github.com/stuartparmenter/lvgl-ddp-stream)
-- **LVGL Canvas Effects**: [`stuartparmenter/lvgl-canvas-fx`](https://github.com/stuartparmenter/lvgl-canvas-fx)
-- **Page Manager**: [`stuartparmenter/lvgl-page-manager`](https://github.com/stuartparmenter/lvgl-page-manager)
+- **DDP Stream + WebSocket Control**: [`pavlov-net/lvgl-ddp-stream`](https://github.com/pavlov-net/lvgl-ddp-stream)
+- **LVGL Canvas Effects**: [`pavlov-net/lvgl-canvas-fx`](https://github.com/pavlov-net/lvgl-canvas-fx)
+- **Page Manager**: [`pavlov-net/lvgl-page-manager`](https://github.com/pavlov-net/lvgl-page-manager)
 
 > For reproducible builds, prefer **tags** or **commit SHAs** rather than a moving branch.
 
@@ -171,7 +171,7 @@ hub75-studio/
 - **USB permissions (Linux):** Add user to dialout/plugdev or use `udev` rules
 - **Blank display:** Verify you selected the correct controller revision
 
-📖 **[View complete troubleshooting guide →](https://github.com/stuartparmenter/hub75-studio/wiki/Troubleshooting)**
+📖 **[View complete troubleshooting guide →](https://github.com/pavlov-net/hub75-studio/wiki/Troubleshooting)**
 
 ---
 
