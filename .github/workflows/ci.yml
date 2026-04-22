@@ -15,7 +15,7 @@ concurrency:
 jobs:
   ci:
     name: Building ${{ matrix.file }} / ${{ matrix.esphome-version }}
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     permissions:
       contents: read
     strategy:
