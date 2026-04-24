@@ -361,6 +361,6 @@ lvgl:
           - lambda: |-
               id(output_art_${uid}).start();
           - lambda: |-
-              lv_obj_set_style_anim_speed(id(title_lbl_${uid}), 7, LV_PART_MAIN);
-              lv_obj_set_style_anim_speed(id(artist_lbl_${uid}), 12, LV_PART_MAIN);
-              lv_obj_set_style_anim_speed(id(album_lbl_${uid}), 8, LV_PART_MAIN);
+              lv_obj_set_style_anim_duration(id(title_lbl_${uid}), lv_anim_speed(7), LV_PART_MAIN);
+              lv_obj_set_style_anim_duration(id(artist_lbl_${uid}), lv_anim_speed(12), LV_PART_MAIN);
+              lv_obj_set_style_anim_duration(id(album_lbl_${uid}), lv_anim_speed(8), LV_PART_MAIN);
