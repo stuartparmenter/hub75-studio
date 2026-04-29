@@ -59,6 +59,7 @@ switch:
   - platform: template
     id: video_src_auto_switch_page
     name: "Auto-switch to ${page_friendly_name} on source change"
+    entity_category: config
     optimistic: true
     restore_mode: RESTORE_DEFAULT_ON
 
