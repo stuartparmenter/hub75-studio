@@ -36,13 +36,16 @@ display:
     auto_clear_enabled: false
     update_interval: never
 
-# Boot button (GPIO0) as power toggle
+# Boot button (GPIO0) as power toggle.
+# GPIO0 is a strapping pin; safe to use as an input button after boot,
+# so suppress the build-time strapping warning for this intentional use.
 binary_sensor:
   - platform: gpio
     id: power_button
     internal: true
     pin:
       number: GPIO0
+      ignore_strapping_warning: true
       mode:
         input: true
         pullup: true
