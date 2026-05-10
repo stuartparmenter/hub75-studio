@@ -49,7 +49,7 @@ packages:
     - path: packages/controllers/apollo-automation-m1-rev6.yaml
       vars:
         panel_width: ${display_panel_width}
-        panel_height: ${display_panel_width}
+        panel_height: ${display_panel_height}
         layout: ${display_layout}
         layout_rows: ${display_layout_rows}
         layout_cols: ${display_layout_cols}
