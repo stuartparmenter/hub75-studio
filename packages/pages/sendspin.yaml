@@ -104,15 +104,14 @@ interval:
           condition:
             - media_player.is_playing: sendspin_media_player
           then:
-            - sendspin.get_track_progress:
-                then:
-                  - lambda: |-
-                      float duration = id(sendspin_track_duration).state;
-                      if (duration > 0) {
-                        int pct = (int)((x * 100.0f) / duration);
-                        pct = std::max(0, std::min(100, pct));
-                        lv_bar_set_value(id(sendspin_progress_bar), pct, LV_ANIM_OFF);
-                      }
+            - lambda: |-
+                float progress = id(sendspin_hub).get_track_progress_ms();
+                float duration = id(sendspin_track_duration).state;
+                if (duration > 0) {
+                  int pct = (int)((progress * 100.0f) / duration);
+                  pct = std::max(0, std::min(100, pct));
+                  lv_bar_set_value(id(sendspin_progress_bar), pct, LV_ANIM_OFF);
+                }
 
 # ---------------------------------------------------------------------------
 # Album art via shared media proxy / DDP
@@ -144,15 +143,14 @@ media_proxy_control:
       format: rgb565
 
 # Register a metadata callback on the sendspin hub once everything is up.
-# The callback is deferred to the main loop by the hub (see
-# sendspin_hub.cpp:808), so it's safe to touch globals / LVGL / the media
-# proxy from here.
+# The callback is deferred to the main loop by the hub, so it's safe to
+# touch globals / LVGL / the media proxy from here.
 esphome:
   on_boot:
     - priority: -100
       then:
         - lambda: |-
-            id(sendspin_hub).add_metadata_callback(
+            id(sendspin_hub).add_metadata_update_callback(
               [](const auto &m) {
                 if (!m.artwork_url.has_value() || m.artwork_url->empty()) return;
                 const std::string &url = *m.artwork_url;
