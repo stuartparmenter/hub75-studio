@@ -27,15 +27,6 @@ lvgl_page_manager:
     - page: page_sendspin
       friendly_name: "${page_friendly_name}"
 
-external_components:
-  - source: github://kahrendt/esphome@sendspin-dev-snapshot2
-    # generic_image intentionally omitted: its presence would make the
-    # device advertise ARTWORK support in the HELLO handshake and receive
-    # raw image bytes to decode locally. We skip it so the server knows to
-    # hold off, and we pull artwork via DDP through media_proxy_control.
-    components: [const, sendspin]
-    refresh: 0s
-
 sendspin:
   id: sendspin_hub
 
